@@ -14,3 +14,8 @@ a {
 * {
   box-sizing: border-box;
 }
+ul, li, p, div{
+  margin: 0;
+  padding: 0;
+}
+ul{list-style: none;}
