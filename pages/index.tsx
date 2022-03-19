@@ -1,16 +1,13 @@
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import axios from 'axios';
-import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import useInView from 'react-cool-inview';
 import { baseURL } from '../src/service/fetchCharacters';
 import MainContainer from '../src/components/MainContainer';
 import Layout from '../src/components/Layout';
 import List from '../src/components/List';
 import styles from '../styles/container.module.scss';
 import style from '../styles/Home.module.scss';
-import { Item } from '../src/components/ListItem';
 
 interface CharacterData {
   data: {
@@ -18,10 +15,6 @@ interface CharacterData {
     results: [];
   };
 }
-type CharactersList = {
-  prev: Item[];
-};
-const CharactersList = dynamic(() => import('../src/components/List'));
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data }: CharacterData = await axios.get(baseURL);
@@ -33,10 +26,9 @@ function Home({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { results } = data;
-  // const [showCharacters, setShowCharacters] = useState(false);
+
   const [characters, setCharacters] = useState([...results]);
   const [loadMore, setLoadMore] = useState(true);
-  const [dataArr, setDataArr] = useState();
   const [page, setPage] = useState(1);
 
   const getMoreCharacters = async () => {
