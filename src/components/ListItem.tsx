@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import styles from '../../styles/CharactersList.module.scss';
 
 export interface Item {
   id: number;
@@ -17,16 +18,19 @@ export interface Item {
 
 export const ListItem = ({ id, name, image }: Item) => {
   return (
-    <li>
+    <li className={styles.characters__item}>
       <Link href={`/characters/${id}`}>
-        <a style={{ fontSize: '20px' }}>
-          {name}
-          <Image
-            src={image}
-            width={'100px'}
-            height={'100px'}
-            alt={name}
-          ></Image>
+        <a className={styles.characters__link}>
+          <div className={styles.characters__thumb}>
+            <Image
+              className={styles.characters__img}
+              src={image}
+              width={'210px'}
+              height={'210px'}
+              alt={name}
+            ></Image>
+          </div>
+          <p className={styles.characters__text}>{name}</p>
         </a>
       </Link>
     </li>

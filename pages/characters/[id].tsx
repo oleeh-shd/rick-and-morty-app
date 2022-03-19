@@ -3,7 +3,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { baseURL } from '../../src/service/fetchCharacters';
 import { Item } from '../../src/components/ListItem';
-import st from '../../styles/CharacterPage.module.scss';
+import styles from '../../styles/CharacterPage.module.scss';
 import MainContainer from '../../src/components/MainContainer';
 
 type Param = {
@@ -19,20 +19,20 @@ export default function CharacterData({ data }: DataCharacter) {
 
   return (
     <MainContainer title="Character page">
-      <section className={st.character__section}>
-        <div className={st.character__container}>
+      <section className={styles.character__section}>
+        <div className={styles.character__container}>
           <Link href="/">
             <a>
-              <button type="button" className={st.btn}>
+              <button type="button" className={styles.btn}>
                 Home
               </button>
             </a>
           </Link>
 
-          <div className={st.data__contentBox}>
-            <div className={st.data__thumb}>
+          <div className={styles.data__contentBox}>
+            <div className={styles.data__thumb}>
               <Image
-                className={st.data__img}
+                className={styles.data__img}
                 src={image}
                 width={'250px'}
                 height={'250px'}
@@ -40,20 +40,20 @@ export default function CharacterData({ data }: DataCharacter) {
               ></Image>
             </div>
 
-            <ul className={st.data__list}>
-              <li className={st.data__item}>
-                <p className={st.data__name}>{name}</p>
+            <ul className={styles.data__list}>
+              <li className={styles.data__item}>
+                <p className={styles.data__name}>{name}</p>
               </li>
-              <li className={st.data__item}>
-                <p className={st.data__text}>{gender}</p>
+              <li className={styles.data__item}>
+                <p className={styles.data__text}>{gender}</p>
               </li>
-              <li className={st.data__item}>
-                <p className={st.data__text}>{species}</p>
+              <li className={styles.data__item}>
+                <p className={styles.data__text}>{species}</p>
               </li>
 
               {status !== 'unknown' ? (
-                <li className={st.data__item}>
-                  <p className={st.data__text}> {status}</p>
+                <li className={styles.data__item}>
+                  <p className={styles.data__text}> {status}</p>
                 </li>
               ) : null}
             </ul>
