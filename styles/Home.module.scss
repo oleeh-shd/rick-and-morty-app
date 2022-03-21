@@ -1,6 +1,5 @@
 .header {
   &__section {
-    position: fixed;
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -8,7 +7,6 @@
     z-index: 50;
     width: 100vw;
     height: 250px;
-    // 180
     background-image: url(../src/assets/images/home-page-header.jpg);
 
     background-size: cover;
@@ -24,4 +22,8 @@
     background-color: black;
     border-radius: 10px;
   }
+}
+.preloader {
+  display: flex;
+  justify-content: center;
 }

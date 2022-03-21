@@ -2,7 +2,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import Link from 'next/link';
 import { baseURL } from '../../src/service/fetchCharacters';
-import { Item } from '../../src/components/ListItem';
+import { Item } from '../../src/components/CharactersList/ListItem';
 import styles from '../../styles/CharacterPage.module.scss';
 import MainContainer from '../../src/components/MainContainer';
 
