@@ -1,18 +1,24 @@
 import { ListItem } from './ListItem';
 import { Item } from './ListItem';
 
-interface CharactersList {
+export interface CharactersList {
   items: Item[];
 }
 
-const List = ({ items }: CharactersList) => {
+export const List = ({ items }: CharactersList) => {
   return (
     <ul>
-      {items.map(({ id, name, image }) => {
-        return <ListItem id={id} key={id} name={name} image={image} />;
+      {items.map(({ id, name, image, episode }) => {
+        return (
+          <ListItem
+            id={id}
+            key={id}
+            name={name}
+            image={image}
+            episode={episode}
+          />
+        );
       })}
     </ul>
   );
 };
-
-export default List;

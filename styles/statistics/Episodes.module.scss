@@ -1,0 +1,11 @@
+.episodes {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+  }
+  &__dataBox {
+    display: flex;
+    // justify-content: space-around;
+  }
+}

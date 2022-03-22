@@ -3,7 +3,8 @@ import axios from 'axios';
 import { baseURL } from '../src/service/fetchCharacters';
 import MainContainer from '../src/components/MainContainer';
 import Layout from '../src/components/Layout';
-import List from '../src/components/List';
+import { List } from '../src/components/List';
+import Link from 'next/link';
 
 interface CharacterData {
   data: {
@@ -28,6 +29,11 @@ function Home({
       <MainContainer title="Main page">
         <Layout>
           <h1>Main Page</h1>
+          <Link href="/statistics">
+            <a>
+              <button type="button">Statistics</button>
+            </a>
+          </Link>
           <List items={results} />
         </Layout>
       </MainContainer>

@@ -6,13 +6,13 @@ export interface Item {
   name: string;
   image: string;
   created?: string;
-  episode?: string[];
+  episode: string[];
   gender?: string;
   species?: string;
   status?: string;
   url?: string;
   type?: string;
-  location?: { key: string };
+  location?: { name: string | undefined; url: string | undefined };
 }
 
 export const ListItem = ({ id, name, image }: Item) => {
