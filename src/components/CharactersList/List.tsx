@@ -10,20 +10,10 @@ export interface CharactersList {
 export type Condition = 'idle' | 'pending' | 'rejected' | 'resolved';
 export const List = ({ items, condition }: CharactersList) => {
   return (
-    <>
-      <ul className={styles.characters__list}>
-        {items.map(({ id, name, image }) => {
-          return (
-            <ListItem
-              id={id}
-              key={id}
-              name={name}
-              image={image}
-              condition={condition}
-            ></ListItem>
-          );
-        })}
-      </ul>
-    </>
+    <ul className={styles.characters__list}>
+      {items.map(({ id, name, image }) => {
+        return <ListItem id={id} key={id} name={name} image={image} />;
+      })}
+    </ul>
   );
 };

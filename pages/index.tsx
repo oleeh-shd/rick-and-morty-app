@@ -70,20 +70,12 @@ function Home({
               hasMore={loadMore}
               loader={
                 <div className={style.preloader}>
-                  <BallTriangle
-                    color="yellow"
-                    height={100}
-                    width={90}
-                    timeout={2000}
-                    style={{
-                      position: 'fixed',
-                      top: '40%',
-                      left: '50%',
-                    }}
-                  />
+                  <BallTriangle color="yellow" height={100} width={90} />
                 </div>
               }
-              endMessage={<h4>Nothing more to show</h4>}
+              endMessage={
+                <h4 className={style.header__title}>Nothing more to show</h4>
+              }
             >
               <List items={characters} condition={condition} />
             </InfiniteScroll>

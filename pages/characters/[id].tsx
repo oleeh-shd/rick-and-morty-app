@@ -38,7 +38,7 @@ export default function CharacterData({ data }: DataCharacter) {
                 width={'250px'}
                 height={'250px'}
                 alt={name}
-              ></Image>
+              />
             </div>
 
             <ul className={styles.data__list}>
