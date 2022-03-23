@@ -44,14 +44,3 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return { props: { data } };
 };
-// var uniq = items
-// .map(el => {
-//   return { count: 1, name: el.location?.name };
-// })
-// .sort((a, b) => {
-//   if (a.location?.name === b.location?.name) {
-//     return { count: +1, name: a.location?.name };
-//   }
-//   // a[b.location?.name] = (a[b.location?.name] || 0) + b.count;
-//   // return a;
-// });

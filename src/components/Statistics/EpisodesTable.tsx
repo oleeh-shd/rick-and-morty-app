@@ -1,34 +1,31 @@
-import React, { ChangeEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import { useState } from 'react';
-import { Item } from '../ListItem';
 import { CharactersList } from '../List';
+import EpisodesList from './EpisodesList';
 import styles from '../../../styles/statistics/Statistics.module.scss';
+import ArrowsList from './ArrowsList';
 
-// type Episode = string[];
 export default function EpisodeTable({ items }: CharactersList) {
-  const [episodesData, setEpisodesData] = useState(() => [...items]);
-  //  ChangeEvent<HTMLInputElement>
-  const descendingQuantity = (e: MouseEvent) => {
-    e.preventDefault();
-    const sortData = episodesData.sort(
-      (a, b) => a.episode?.length - b.episode?.length,
-    );
-
-    setEpisodesData(sortData);
-    console.log('episodesData возрастание', episodesData);
-
-    return sortData;
-  };
+  const [rising, setRising] = useState(() => [...items]);
+  const [descending, setDescending] = useState(() => [...items]);
+  const [togler, setTogler] = useState('initial');
 
   const risingQuantity = (e: MouseEvent) => {
     e.preventDefault();
-    const sortData = episodesData.sort(
+    const sortData = items.sort(
+      (a, b) => a.episode?.length - b.episode?.length,
+    );
+    setTogler('rising');
+    setRising(sortData);
+  };
+
+  const descendingQuantity = (e: MouseEvent) => {
+    e.preventDefault();
+    const sortData = items.sort(
       (a, b) => b.episode?.length - a.episode?.length,
     );
-
-    setEpisodesData(sortData);
-    console.log('episodesData', episodesData);
-    return sortData;
+    setTogler('descending');
+    setDescending(sortData);
   };
 
   return (
@@ -39,12 +36,16 @@ export default function EpisodeTable({ items }: CharactersList) {
           <th className={styles.table__header}>
             <div className={styles.table__boxWithArrow}>
               Number of episodes
+              {/* <ArrowsList
+                risingQuantity={risingQuantity}
+                descendingQuantity={descendingQuantity}
+              /> */}
               <ul className={styles.arrows__list}>
                 <li className={styles.arrows__item}>
                   <button
                     type="button"
                     className={styles.arrows__btn}
-                    onClick={risingQuantity}
+                    onClick={descendingQuantity}
                   >
                     &#x2193;
                   </button>
@@ -54,7 +55,7 @@ export default function EpisodeTable({ items }: CharactersList) {
                   <button
                     type="button"
                     className={styles.arrows__btn}
-                    onClick={descendingQuantity}
+                    onClick={risingQuantity}
                   >
                     &#x2191;
                   </button>
@@ -64,25 +65,13 @@ export default function EpisodeTable({ items }: CharactersList) {
           </th>
         </tr>
       </thead>
-
-      {items.map(({ name, episode, id }: Item) => {
-        return (
-          <tbody key={id} className={styles.table__body}>
-            <tr className={styles.table__dataRow}>
-              <td className={styles.table__item}>{name}</td>
-              <td className={styles.table__item}>{episode?.length}</td>
-            </tr>
-          </tbody>
-        );
-      })}
-      <tfoot
-        style={{
-          backgroundColor: '#800000',
-          height: '50px',
-          borderTop: '0.2px solid yellow',
-        }}
-      >
-        <tr></tr>
+      {togler === 'initial' && <EpisodesList items={items} />}
+      {togler === 'descending' && <EpisodesList items={descending} />}
+      {togler === 'rising' && <EpisodesList items={rising} />}
+      <tfoot className={styles.table__footer}>
+        <tr>
+          <></>
+        </tr>
       </tfoot>
     </table>
   );

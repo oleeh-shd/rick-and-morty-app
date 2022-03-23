@@ -1,37 +1,55 @@
+import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
-import { Item } from '../ListItem';
 import { CharactersList } from '../List';
+// import ArrowsList from './ArrowsList';
 import styles from '../../../styles/statistics/Statistics.module.scss';
-
-// type ArrName = [
-//   {
-//     name: string | undefined;
-//     quantity: string[];
-//   },
-// ];
+import LocationList from './LocationList';
+import ArrowsList from './ArrowsList';
 
 export default function LocationTable({ items }: CharactersList) {
-  const [locations, setLocations] = useState([]);
-  const uniq = items.map(el => {
-    return { count: 1, name: el.location?.name };
-  });
-  // const arrLocation = uniq.reduce(function (acc, el) {
-  //   acc[el.name] = (acc[el.name] || 0) + 1;
-  //   return acc;
-  // }, {});
-  // console.log('arrLocation', arrLocation);
+  const [rising, setRising] = useState([{}]);
+  const [descending, setDescending] = useState([{}]);
+  const [togler, setTogler] = useState('initial');
 
-  // const charactersQuantity = items.reduce((prevItem, el) => {
-  //   const { location } = el;
-  //   if (location?.name) {
-  //     prevItem[location?.name] = (prevItem[location?.name] || 0) + 1;
-  //     return prevItem;
-  //   }
-  // }, {});
-  // // console.log('locations', charactersQuantity);
-  // const keys = Object.entries(charactersQuantity);
-  // console.log(typeof keys);
-  // setLocations([].push(keys));
+  const risingQuantity = (e: MouseEvent) => {
+    e.preventDefault();
+    const sortData = locationInfo.sort((a, b) => a.count - b.count);
+
+    setRising(sortData);
+
+    setTogler('rising');
+    return sortData;
+  };
+
+  const descendingQuantity = (e: MouseEvent) => {
+    e.preventDefault();
+    const sortData = locationInfo.sort((a, b) => b.count - a.count);
+
+    setDescending(sortData);
+    setTogler('descending');
+    return sortData;
+  };
+  const locationObj = items.reduce((acc, { location }) => {
+    const { name } = location;
+    if (acc[name] === undefined) {
+      acc[name] = 1;
+    } else {
+      acc[name] += 1;
+    }
+
+    return acc;
+  }, {});
+
+  type locationObj = { name: string; count: number; id: string };
+  // type Count = { count: number };
+  const locationInfo: locationObj[] = Object.keys(locationObj).map(name => {
+    return {
+      name: name,
+      count: locationObj[name],
+      id: uuidv4(),
+    };
+  });
+
   return (
     <table className={styles.table__el}>
       <thead className={styles.table__head}>
@@ -39,16 +57,23 @@ export default function LocationTable({ items }: CharactersList) {
           <th className={styles.table__header}>Location</th>
           <th className={styles.table__header}>
             <div className={styles.table__boxWithArrow}>
-              {' '}
               Number of characters
               <ul className={styles.arrows__list}>
                 <li className={styles.arrows__item}>
-                  <button type="button" className={styles.arrows__btn}>
+                  <button
+                    type="button"
+                    className={styles.arrows__btn}
+                    onClick={descendingQuantity}
+                  >
                     &#x2193;
                   </button>
                 </li>
                 <li className={styles.arrows__item}>
-                  <button type="button" className={styles.arrows__btn}>
+                  <button
+                    type="button"
+                    className={styles.arrows__btn}
+                    onClick={risingQuantity}
+                  >
                     &#x2191;
                   </button>
                 </li>
@@ -57,16 +82,16 @@ export default function LocationTable({ items }: CharactersList) {
           </th>
         </tr>
       </thead>
-      {items.map(({ name, location, id }: Item) => {
-        return (
-          <tbody key={id} className={styles.table__body}>
-            <tr className={styles.table__dataRow}>
-              <td className={styles.table__item}>{location?.name}</td>
-              <td className={styles.table__item}> {name}</td>
-            </tr>
-          </tbody>
-        );
-      })}
+      {togler === 'initial' && <LocationList dataArr={locationInfo} />}
+      {togler === 'rising' && <LocationList dataArr={rising} />}
+      {togler === 'descending' && <LocationList dataArr={descending} />}
+
+      <tfoot className={styles.table__footer}>
+        <tr>
+          <></>
+        </tr>
+      </tfoot>
     </table>
   );
 }
+// DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
