@@ -1,4 +1,3 @@
-import React, { MouseEvent } from 'react';
 import { useState } from 'react';
 import { CharactersList } from '../List';
 import EpisodesList from './EpisodesList';
@@ -8,66 +7,51 @@ import ArrowsList from './ArrowsList';
 export default function EpisodeTable({ items }: CharactersList) {
   const [rising, setRising] = useState(() => [...items]);
   const [descending, setDescending] = useState(() => [...items]);
-  const [togler, setTogler] = useState('initial');
+  const [toggler, setToggler] = useState('initial');
 
-  const risingQuantity = (e: MouseEvent) => {
-    e.preventDefault();
-    const sortData = items.sort(
-      (a, b) => a.episode?.length - b.episode?.length,
-    );
-    setTogler('rising');
-    setRising(sortData);
+  const HandleChange = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    const { name } = e.currentTarget;
+
+    switch (name) {
+      case 'rising':
+        const sortData = items.sort(
+          (a, b) => a.episode?.length - b.episode?.length,
+        );
+        setRising(sortData);
+        setToggler('rising');
+        break;
+
+      case 'descending':
+        const sortDescending = items.sort(
+          (a, b) => b.episode?.length - a.episode?.length,
+        );
+        setDescending(sortDescending);
+        setToggler('descending');
+        break;
+    }
   };
-
-  const descendingQuantity = (e: MouseEvent) => {
-    e.preventDefault();
-    const sortData = items.sort(
-      (a, b) => b.episode?.length - a.episode?.length,
-    );
-    setTogler('descending');
-    setDescending(sortData);
-  };
-
   return (
     <table className={styles.table__el}>
-      <thead className={styles.table__head}>
+      {/* <thead className={styles.table__head}>
         <tr className={styles.table__header}>
           <th className={styles.table__header}>Character name</th>
           <th className={styles.table__header}>
             <div className={styles.table__boxWithArrow}>
               Number of episodes
-              {/* <ArrowsList
-                risingQuantity={risingQuantity}
-                descendingQuantity={descendingQuantity}
-              /> */}
-              <ul className={styles.arrows__list}>
-                <li className={styles.arrows__item}>
-                  <button
-                    type="button"
-                    className={styles.arrows__btn}
-                    onClick={descendingQuantity}
-                  >
-                    &#x2193;
-                  </button>
-                </li>
-
-                <li className={styles.arrows__item}>
-                  <button
-                    type="button"
-                    className={styles.arrows__btn}
-                    onClick={risingQuantity}
-                  >
-                    &#x2191;
-                  </button>
-                </li>
-              </ul>
+              <ArrowsList ButtonAction={HandleChange} nameTitle={'Character name'}
+        numberTitle={'Number of episodes'}/>
             </div>
           </th>
         </tr>
-      </thead>
-      {togler === 'initial' && <EpisodesList items={items} />}
-      {togler === 'descending' && <EpisodesList items={descending} />}
-      {togler === 'rising' && <EpisodesList items={rising} />}
+      </thead> */}
+      <ArrowsList
+        ButtonAction={HandleChange}
+        nameTitle={'Character name'}
+        numberTitle={'Number of episodes'}
+      />
+      {toggler === 'initial' && <EpisodesList items={items} />}
+      {toggler === 'descending' && <EpisodesList items={descending} />}
+      {toggler === 'rising' && <EpisodesList items={rising} />}
       <tfoot className={styles.table__footer}>
         <tr>
           <></>

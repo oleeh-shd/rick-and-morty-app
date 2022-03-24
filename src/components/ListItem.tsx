@@ -12,7 +12,7 @@ export interface Item {
   status?: string;
   url?: string;
   type?: string;
-  location?: { name: string | undefined; url: string | undefined };
+  location: { name: string; url: string | undefined };
 }
 
 export const ListItem = ({ id, name, image }: Item) => {

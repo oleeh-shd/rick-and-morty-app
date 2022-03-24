@@ -8,7 +8,7 @@ export interface CharactersList {
 export const List = ({ items }: CharactersList) => {
   return (
     <ul>
-      {items.map(({ id, name, image, episode }) => {
+      {items.map(({ id, name, image, episode, location }) => {
         return (
           <ListItem
             id={id}
@@ -16,6 +16,7 @@ export const List = ({ items }: CharactersList) => {
             name={name}
             image={image}
             episode={episode}
+            location={location}
           />
         );
       })}
