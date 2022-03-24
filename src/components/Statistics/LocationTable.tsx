@@ -34,7 +34,7 @@ export default function LocationTable({ items }: CharactersList) {
     };
   });
 
-  const HandleChange = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleChange = (e: React.MouseEvent<HTMLButtonElement>): void => {
     const { name } = e.currentTarget;
 
     switch (name) {
@@ -55,7 +55,7 @@ export default function LocationTable({ items }: CharactersList) {
   return (
     <table className={styles.table__el}>
       <ArrowsList
-        ButtonAction={HandleChange}
+        buttonAction={handleChange}
         nameTitle={'Location'}
         numberTitle={'Number of characters'}
       />

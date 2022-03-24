@@ -9,7 +9,7 @@ export default function EpisodeTable({ items }: CharactersList) {
   const [descending, setDescending] = useState(() => [...items]);
   const [toggler, setToggler] = useState('initial');
 
-  const HandleChange = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleChange = (e: React.MouseEvent<HTMLButtonElement>): void => {
     const { name } = e.currentTarget;
 
     switch (name) {
@@ -32,20 +32,8 @@ export default function EpisodeTable({ items }: CharactersList) {
   };
   return (
     <table className={styles.table__el}>
-      {/* <thead className={styles.table__head}>
-        <tr className={styles.table__header}>
-          <th className={styles.table__header}>Character name</th>
-          <th className={styles.table__header}>
-            <div className={styles.table__boxWithArrow}>
-              Number of episodes
-              <ArrowsList ButtonAction={HandleChange} nameTitle={'Character name'}
-        numberTitle={'Number of episodes'}/>
-            </div>
-          </th>
-        </tr>
-      </thead> */}
       <ArrowsList
-        ButtonAction={HandleChange}
+        buttonAction={handleChange}
         nameTitle={'Character name'}
         numberTitle={'Number of episodes'}
       />

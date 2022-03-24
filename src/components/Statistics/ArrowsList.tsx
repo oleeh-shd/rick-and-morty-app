@@ -2,13 +2,13 @@ import React from 'react';
 import styles from '../../../styles/statistics/Statistics.module.scss';
 
 export interface Props {
-  ButtonAction: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  buttonAction: (e: React.MouseEvent<HTMLButtonElement>) => void;
   nameTitle: string;
   numberTitle: string;
 }
 
 export default function ArrowsList({
-  ButtonAction,
+  buttonAction,
   nameTitle,
   numberTitle,
 }: Props) {
@@ -25,7 +25,7 @@ export default function ArrowsList({
                   type="button"
                   className={styles.arrows__btn}
                   name="descending"
-                  onClick={ButtonAction}
+                  onClick={buttonAction}
                 >
                   &#x2193;
                 </button>
@@ -36,7 +36,7 @@ export default function ArrowsList({
                   type="button"
                   className={styles.arrows__btn}
                   name="rising"
-                  onClick={ButtonAction}
+                  onClick={buttonAction}
                 >
                   &#x2191;
                 </button>
