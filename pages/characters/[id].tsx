@@ -7,6 +7,7 @@ import { Item } from '../../src/components/CharactersList/ListItem';
 import styles from '../../styles/CharacterPage.module.scss';
 import MainContainer from '../../src/components/MainContainer';
 
+const btnClass = styles.btn + ' ' + styles.secondBtn;
 type Param = {
   params: { id: number };
 };
@@ -26,6 +27,13 @@ export default function CharacterData({ data }: DataCharacter) {
             <a>
               <button type="button" className={styles.btn}>
                 Home
+              </button>
+            </a>
+          </Link>
+          <Link href="/statistics">
+            <a>
+              <button type="button" className={btnClass}>
+                Statistics
               </button>
             </a>
           </Link>
