@@ -21,12 +21,7 @@ export const ListItem = ({ id, name, image }: Item) => {
       <Link href={`/characters/${id}`}>
         <a style={{ fontSize: '20px' }}>
           {name}
-          <Image
-            src={image}
-            width={'100px'}
-            height={'100px'}
-            alt={name}
-          ></Image>
+          <Image src={image} width={'100px'} height={'100px'} alt={name} />
         </a>
       </Link>
     </li>

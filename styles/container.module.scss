@@ -1,0 +1,24 @@
+.container {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.section {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+.chracters__section {
+  padding-top: 80px;
+  padding-bottom: 60px;
+
+  width: 100vw;
+  background-image: linear-gradient(
+      rgba(47, 48, 58, 0.6),
+      rgba(47, 48, 58, 0.6)
+    ),
+    url(../src/assets/images/home-back2.jpg);
+
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}

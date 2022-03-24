@@ -12,7 +12,7 @@ export default function MainContainer({ title, children }: Title) {
       <Head>
         <title>{title}</title>
       </Head>
-      <div>{children}</div>
+      <>{children}</>
     </>
   );
 }
