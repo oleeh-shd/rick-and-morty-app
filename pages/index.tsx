@@ -1,6 +1,6 @@
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import Link from 'next/link';
 import { BallTriangle } from 'react-loader-spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { baseURL } from '../src/service/fetchCharacters';
@@ -9,31 +9,36 @@ import Layout from '../src/components/Layout';
 import { Condition, List } from '../src/components/CharactersList/List';
 import styles from '../styles/container.module.scss';
 import style from '../styles/Home.module.scss';
+import btnStyle from '../styles/CharacterPage.module.scss';
+import { ContextData } from '../src//components//Context';
+import { Item } from '../src/components/ListItem';
 
-interface CharacterData {
-  data: {
-    info: {};
-    results: [];
-  };
+export interface CharactersList {
+  items: Item[];
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const { data }: CharacterData = await axios.get(baseURL);
-  return { props: { data } };
-};
+const btnClass = btnStyle.btn + ' ' + btnStyle.secondBtn;
 
-function Home({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { results } = data;
-
-  const [characters, setCharacters] = useState([...results]);
+function Home() {
+  const { items, setItems } = useContext(ContextData);
   const [loadMore, setLoadMore] = useState(true);
   const [page, setPage] = useState(2);
   const [condition, setCondition] = useState<Condition>('idle');
 
+  useEffect(() => {
+    axios.get(baseURL).then(res => {
+      if (items.length === 0) {
+        const { data } = res;
+
+        setItems(data.results);
+      }
+    });
+  }, [items.length, setItems]);
+
   const getMoreCharacters = async () => {
     setCondition('pending');
+    let localStorageKey = 'id';
+    localStorage.setItem(localStorageKey, `${page}`);
 
     if (page < 41) {
       setPage(prev => {
@@ -42,17 +47,27 @@ function Home({
     } else {
       return;
     }
+    localStorage.setItem(localStorageKey, `${page}`);
+    const getChangeId = Number(localStorage.getItem('id'));
 
-    const { data } = await axios.get(`${baseURL}/?page=${page}`);
+    const { data } = await axios.get(`${baseURL}/?page=${getChangeId}`);
 
     if (!data) {
       setCondition('rejected');
       return console.error('something went wrong');
     }
     setTimeout(() => {
-      setCharacters(prev => [...prev, ...data.results]);
-    }, 2000);
+      setItems([...items, ...data.results]);
+    }, 1000);
+    scroll();
     setCondition('resolved');
+  };
+
+  const scroll = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
   };
 
   return (
@@ -63,8 +78,15 @@ function Home({
         </header>
         <section className={styles.chracters__section}>
           <div className={styles.container}>
+            <Link href="/statistics">
+              <a>
+                <button type="button" className={btnClass}>
+                  Statistics
+                </button>
+              </a>
+            </Link>
             <InfiniteScroll
-              dataLength={characters.length}
+              dataLength={items.length}
               next={getMoreCharacters}
               scrollThreshold={'100%'}
               hasMore={loadMore}
@@ -77,7 +99,7 @@ function Home({
                 <h4 className={style.header__title}>Nothing more to show</h4>
               }
             >
-              <List items={characters} condition={condition} />
+              <List items={items} condition={condition} />
             </InfiniteScroll>
           </div>
         </section>
